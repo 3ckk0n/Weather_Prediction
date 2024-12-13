@@ -3,3 +3,11 @@ numpy
 matplotlib
 scikit-learn
 pandas
+streamlit
+plotly
+tzwhere
+folium
+streamlit_folium
+timezonefinder
+# setuptools
+tensorflow
