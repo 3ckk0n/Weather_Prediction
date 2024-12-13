@@ -8,5 +8,6 @@ plotly
 tzwhere
 folium
 streamlit_folium
-setuptools
+timezonefinder
+# setuptools
 tensorflow
