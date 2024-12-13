@@ -34,6 +34,10 @@ html_templ = """
     </div>
     """
 st.markdown(html_templ, unsafe_allow_html=True)
+#Header
+# st.subheader("Rain prediction web application :umbrella_with_rain_drops:")
+st.title("By Pham Tien Dat and Nguyen Tran Hoi Thang")
+st.write("[Learn more>](https://www.facebook.com/nguyenmoevl)")
 
 # Sidebar context with improvements for design
 st.sidebar.title("Weather Prediction Sidebar")
@@ -182,14 +186,14 @@ else:
 
     lat = float(country_data.loc[data.loc[:, "city_ascii"] == city, "lat"])
     lng = float(country_data.loc[data.loc[:, "city_ascii"] == city, "lng"])
-    temp_df,label = getFuturelabel()
+    temp_df,label = getFuturelabel(7,lat,lng)
     with open('decision_tree.pkl', 'rb') as f:
         clf = pickle.load(f)
     # Predict the result
     result = clf.predict(temp_df)
     label_temp = []
     for i in range(7):
-        label_temp.append(getlabel(result[0]))
+        label_temp.append(getlabel(result[i]))
 
     # Get current weather data from Open Meteo API
     response_current = requests.get(f'https://api.open-meteo.com/v1/forecast?latitude={lat}&longitude={lng}&current_weather=true')
@@ -233,7 +237,7 @@ else:
 
     st.info(f"The current temperature is {temp} °{degree}. \nThe wind speed is {speed} m/s. \nThe wind is coming from {common_dir}.")
     for i in range(7):
-        st.info(f"The predict in next {i} days weather condition will be : {label_temp[i]}")
+        st.info(f"The predict in next {i+1} days weather condition will be : {label_temp[i]["day"].values}")
     # Fetch hourly data for the week ahead
     st.subheader("Week ahead")
     st.write('Temperature and rain forecast one week ahead & city location on the map')
@@ -289,7 +293,7 @@ st.sidebar.empty()  # This creates some space
 # About the Author section at the bottom of the sidebar
 if st.sidebar.button("About the Author"):
     st.sidebar.subheader("Weather Prediction App")
-    st.sidebar.markdown("by PhuongNgo")
+    st.sidebar.markdown("by PhuongNgo va Hui Nhang")
     st.sidebar.markdown("[ngop2515@gmail.com]")
     st.sidebar.text("All Rights Reserved (2024)")
 
